@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ブキ別の軌跡 | スプラトゥーン3 アップデートの軌跡</title>
+<meta name="description" content="『スプラトゥーン3』のブキ種別アップデート履歴。シューターからワイパーまで、各ブキ種の調整回数・強化と弱体の軌跡をデータで一望。">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/weapons.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="index.html"><span class="sq">▪</span> INK EVOKUTION</a>
+  <a class="nav-link" href="index.html">アプデの軌跡</a>
+  <a class="nav-link current" href="weapons.html">ブキ別の軌跡</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero wpn-hero">
+  <svg class="blob b1" viewBox="0 0 200 200"><path fill="#ffb340" d="M48 12c30-18 78-12 102 14s28 70 8 98-66 44-100 30S-2 102 6 66 18 30 48 12z" opacity=".14"/></svg>
+  <svg class="blob b2" viewBox="0 0 200 200"><path fill="#2ee6d6" d="M60 8c34-14 84 0 104 32s10 80-18 102-78 22-104-4S-8 70 8 42 26 22 60 8z" opacity=".16"/></svg>
+  <svg class="blob b3" viewBox="0 0 200 200"><path fill="#e8ff2e" d="M52 16c28-20 76-16 100 10s30 68 12 96-62 46-98 34S0 108 6 70 24 36 52 16z" opacity=".45"/></svg>
+  <div class="wrap hero-inner">
+    <div class="hero-tag">SPLATOON 3 — WEAPON ARCHIVE</div>
+    <h1>キミの<span class="ink-a">相棒</span>は、<br>何回<span class="ink-b">調整</span>された？</h1>
+    <p class="sub">シューターからワイパーまで、11のブキ種それぞれが歩んだ調整の軌跡。強化されたのか、弱体化されたのか——カードを選んで、相棒の歴史をたどろう。</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" id="statTotal" data-count="0">0</div><div class="lbl">のべ調整回数</div></div>
+      <div class="stat"><div class="num" id="statClasses" data-count="0">0</div><div class="lbl">ブキ種</div></div>
+      <div class="stat"><div class="num" id="statTop" style="font-size:1.3rem">—</div><div class="lbl" id="statTopCount">最多調整</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ SCROLL</div>
+</header>
+
+<!-- ================= ブキ種カード ================= -->
+<section id="grid-sec">
+  <div class="wrap">
+    <span class="eyebrow">Weapon Classes</span>
+    <h2>ブキ種<span class="hl">図鑑</span> — 調整回数つき</h2>
+    <p class="lead">カラーバーは調整の内訳（<span style="color:var(--ink-a)">強化</span> / <span style="color:var(--ink-c)">強化＋弱体</span> / <span style="color:var(--ink-b)">弱体化</span>）。カードを選ぶと下に詳細な軌跡が表示される。</p>
+    <div class="wpn-grid" id="wpnGrid"></div>
+  </div>
+</section>
+
+<!-- ================= ランキング ================= -->
+<section id="ranking-sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow">Ranking</span>
+    <h2>調整回数<span class="hl">ランキング</span></h2>
+    <p class="lead">運営に最も「見られていた」ブキ種はどれか。バランス調整での言及回数を内訳つきで積み上げ。</p>
+    <div class="chart-card full show">
+      <div class="chart-box" style="height:420px"><canvas id="chartRanking"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 詳細 ================= -->
+<section id="detail-sec">
+  <div class="wrap">
+    <span class="eyebrow">Trajectory</span>
+    <h2>選んだブキ種の<span class="hl">軌跡</span></h2>
+    <p class="lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。右肩上がりなら愛され、右肩下がりなら警戒されてきた証。</p>
+    <div class="detail-panel">
+      <div class="d-head" id="detailHead"></div>
+      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
+      <div class="d-timeline" id="detailTimeline"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    本サイトは非公式のファンメイドアーカイブです。ブキのイラストはオリジナルのピクトグラムです。<br>
+    データ出典：<a href="https://support.nintendo.com/jp/switch/software_support/av5ja/index.html" target="_blank" rel="noopener">任天堂サポート「スプラトゥーン3 更新データ」</a>（調整内容は要約・編集を含む）<br>
+    Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
+  </div>
+</footer>
+
+<script src="js/weapons-data.js"></script>
+<script src="js/weapons.js"></script>
+</body>
+</html>

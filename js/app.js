@@ -214,7 +214,8 @@ document.querySelectorAll(".tl-item,.chart-card,.season-card").forEach(el=>io.ob
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 document.querySelectorAll(".stat .num").forEach(el=>{
   const target = +el.dataset.count;
-  if(reduced){ el.textContent = target.toLocaleString(); return; }
+  // 非表示タブではタイマーが抑制されるため、アニメーションせず最終値を即表示
+  if(reduced || document.hidden){ el.textContent = target.toLocaleString(); return; }
   let t0=null;
   const tick = ts=>{
     if(!t0)t0=ts;
@@ -223,4 +224,6 @@ document.querySelectorAll(".stat .num").forEach(el=>{
     if(p<1)requestAnimationFrame(tick);
   };
   setTimeout(()=>requestAnimationFrame(tick),500);
+  // rAFが抑制される環境（非アクティブタブ等）でも最終値を保証
+  setTimeout(()=>{ el.textContent = target.toLocaleString(); },2200);
 });
