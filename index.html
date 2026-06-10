@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スプラトゥーン3 アップデートの軌跡 | Update History</title>
+<meta name="description" content="『スプラトゥーン3』の全アップデート履歴を、タイムラインとデータビジュアライゼーションで一望できる非公式ファンメイドアーカイブ。">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <svg class="blob b1" viewBox="0 0 200 200"><path fill="#e8ff2e" d="M48 12c30-18 78-12 102 14s28 70 8 98-66 44-100 30S-2 102 6 66 18 30 48 12z" opacity=".16"/></svg>
+  <svg class="blob b2" viewBox="0 0 200 200"><path fill="#a05cff" d="M60 8c34-14 84 0 104 32s10 80-18 102-78 22-104-4S-8 70 8 42 26 22 60 8z" opacity=".18"/></svg>
+  <svg class="blob b3" viewBox="0 0 200 200"><path fill="#2ee6d6" d="M52 16c28-20 76-16 100 10s30 68 12 96-62 46-98 34S0 108 6 70 24 36 52 16z" opacity=".5"/></svg>
+  <div class="wrap hero-inner">
+    <div class="hero-tag">SPLATOON 3 — UPDATE ARCHIVE</div>
+    <h1>イカした進化、<br><span class="ink-a">41回</span>の<span class="ink-b">塗り重ね</span>。</h1>
+    <p class="sub">2022年9月の発売から最新Ver.11.2.0まで、『スプラトゥーン3』が歩んだ全アップデートの軌跡を、タイムラインとデータで一望できるアーカイブ。シーズンの記憶も、ブキ調整の歴史も、ぜんぶここに。</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" data-count="41">0</div><div class="lbl">配信された更新データ</div></div>
+      <div class="stat"><div class="num" data-count="11">0</div><div class="lbl">メジャーバージョン</div></div>
+      <div class="stat"><div class="num" data-count="9">0</div><div class="lbl">開催シーズン</div></div>
+      <div class="stat"><div class="num" data-count="1371">0</div><div class="lbl">運営日数（発売〜最新）</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ SCROLL</div>
+</header>
+
+<!-- ================= タイムライン ================= -->
+<section id="timeline-sec">
+  <div class="wrap">
+    <span class="eyebrow">Timeline</span>
+    <h2>ナワバリ<span class="hl">年表</span> — 全更新データ</h2>
+    <p class="lead">Ver.1.1.0（2022.9.8）からVer.11.2.0（2026.6.11）まで。種類でフィルタして、気になるバージョンだけ塗り出そう。前回からの間隔（日数）も表示。</p>
+    <div class="filters">
+      <button class="chip active" data-f="all">すべて (41)</button>
+      <button class="chip" data-f="major">シーズン・大型 (10)</button>
+      <button class="chip" data-f="balance">バランス調整 (17)</button>
+      <button class="chip" data-f="patch">不具合修正 (14)</button>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ================= データ ================= -->
+<section id="data-sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow">Data Viz</span>
+    <h2>データで見る<span class="hl">アップデートの傾向</span></h2>
+    <p class="lead">発売直後は約2週間ペースだった更新が、シーズン制終了後は数ヶ月単位へ。運営フェーズの移り変わりがグラフからも見えてくる。</p>
+    <div class="chart-grid">
+      <div class="chart-card full">
+        <h3>アプデ間隔の推移 — 「次はいつ？」の答え</h3>
+        <div class="desc">各バージョンの、ひとつ前の更新からの経過日数。後半に行くほど間隔が伸びている。</div>
+        <div class="chart-box"><canvas id="chartInterval"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>年別の更新回数</h3>
+        <div class="desc">2023年が最多。シーズン制が回っていた時期の勢いがわかる。</div>
+        <div class="chart-box"><canvas id="chartYear"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>更新の種類の内訳</h3>
+        <div class="desc">大型（X.0.0）／バランス調整（X.Y.0）／不具合修正（X.Y.Z）の比率。</div>
+        <div class="chart-box"><canvas id="chartType"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= シーズン ================= -->
+<section id="season-sec">
+  <div class="wrap">
+    <span class="eyebrow">Seasons</span>
+    <h2>シーズンの<span class="hl">記憶</span></h2>
+    <p class="lead">大型アップデート（X.0.0）はシーズン開幕とともに配信されてきた。9シーズンの開幕とその後の節目をふりかえる。</p>
+    <div class="season-row" id="seasons"></div>
+  </div>
+</section>
+
+<!-- ================= 最新アプデ ================= -->
+<section id="latest-sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow">Latest — Ver. 11.2.0（2026.6.11）</span>
+    <h2>最新調整を<span class="hl">バフ/ナーフ</span>で読む</h2>
+    <p class="lead">Ver.11.0.0以降の戦況を長期分析した上での再調整。ブラスター爆風は強化前と強化後の中間サイズに。Xマッチのチーム分けも改善。</p>
+    <div class="vs-grid">
+      <div class="vs-col buff">
+        <h3>↑ 強化（バフ）</h3>
+        <div class="vs-sub">個性の強化・扱いやすさの向上</div>
+        <div class="vs-item"><span class="w">N-ZAP85 / 89</span><span class="v">足元塗りが発生しやすく</span></div>
+        <div class="vs-item"><span class="w">L3リールガン系</span><span class="v">弾速 約+5%・射程延長</span></div>
+        <div class="vs-item"><span class="w">ノヴァブラスター系</span><span class="v">ジャンプ撃ちブレ 約-8%</span></div>
+        <div class="vs-item"><span class="w">クラッシュブラスター系</span><span class="v">ジャンプ撃ちブレ 約-13%</span></div>
+        <div class="vs-item"><span class="w">スパイガジェット系</span><span class="v">インク消費 約-8%</span></div>
+        <div class="vs-item"><span class="w">ウルトラショット / ジェットパック</span><span class="v">対グレートバリア 約+30%</span></div>
+        <div class="vs-item"><span class="w">ショクワンダー</span><span class="v">飛びつきインク消費 約-33%</span></div>
+        <div class="vs-item"><span class="w">ナイスダマ</span><span class="v">対ワイパー被ダメ 約-30%</span></div>
+        <div class="vs-item"><span class="w">スミナガシート</span><span class="v">装置の飛距離アップ</span></div>
+      </div>
+      <div class="vs-col nerf">
+        <h3>↓ 弱体化（ナーフ）</h3>
+        <div class="vs-sub">Ver.11.0.0の強化を一部巻き戻し</div>
+        <div class="vs-item"><span class="w">ブラスター全般</span><span class="v">爆風の当たり判定を縮小（中間値へ）</span></div>
+        <div class="vs-item"><span class="w">ホットブラスター系</span><span class="v">射撃後の硬直 約+1/60秒</span></div>
+        <div class="vs-item"><span class="w">Rブラスターエリート系</span><span class="v">インク回復開始 約+10/60秒</span></div>
+        <div class="vs-item"><span class="w">バレルスピナー系</span><span class="v">飛沫・着弾塗り半径 約-8%</span></div>
+        <div class="vs-item"><span class="w">カニタンク</span><span class="v">カノン砲の爆発範囲 約-14%</span></div>
+      </div>
+    </div>
+    <div class="sp-table">
+      <h3>スペシャル必要ポイントの変更</h3>
+      <div id="spRows"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 次回予測 ================= -->
+<section id="predict-sec">
+  <div class="wrap">
+    <span class="eyebrow">Next Update?</span>
+    <div class="predict">
+      <h2>次のアプデは<span class="hl">いつ？</span></h2>
+      <div class="big" id="nextGuess">—</div>
+      <p>公式予告：次回の更新データは「対戦バランスの変更を中心」に配信予定。直近のVer.11.x台の配信間隔（平均値）から機械的に推定した参考値です。公式発表が常に優先。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    本サイトは非公式のファンメイドアーカイブです。データ出典：<a href="https://support.nintendo.com/jp/switch/software_support/av5ja/index.html" target="_blank" rel="noopener">任天堂サポート「スプラトゥーン3 更新データ」</a><br>
+    Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

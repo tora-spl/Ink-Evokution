@@ -1,0 +1,215 @@
+:root{
+  --bg:#171231;
+  --bg2:#1f1842;
+  --card:#262052;
+  --card-edge:#352c6e;
+  --ink-a:#e8ff2e;      /* 強化・チームA */
+  --ink-a-dim:#b8cc1f;
+  --ink-b:#a05cff;      /* 弱体化・チームB */
+  --ink-c:#2ee6d6;      /* アクセント（シアン） */
+  --ink-d:#ff5c8a;      /* ピンク */
+  --text:#f4f1ff;
+  --text-dim:#a89fd6;
+  --mono:'Courier New',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic UI','Meiryo',sans-serif;
+  overflow-x:hidden;
+  line-height:1.7;
+}
+::selection{background:var(--ink-a);color:#171231}
+
+/* ===== 共通 ===== */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+.eyebrow{
+  display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.22em;
+  color:var(--ink-c);text-transform:uppercase;margin-bottom:14px;
+  border:1.5px solid var(--ink-c);border-radius:999px;padding:4px 16px;
+  transform:skewX(-8deg);
+}
+h2{
+  font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;line-height:1.3;
+  transform:skewX(-4deg);margin-bottom:10px;
+}
+h2 .hl{color:var(--ink-a)}
+.lead{color:var(--text-dim);max-width:640px;margin-bottom:42px;font-size:.95rem}
+
+/* ===== ヒーロー ===== */
+.hero{
+  min-height:92vh;display:flex;align-items:center;position:relative;
+  background:radial-gradient(ellipse 80% 60% at 70% 20%, #2a2160 0%, var(--bg) 60%);
+  overflow:hidden;padding:60px 0;
+}
+.blob{position:absolute;filter:blur(0px);opacity:.9;animation:float 9s ease-in-out infinite;pointer-events:none}
+.blob.b1{top:-60px;right:-40px;width:340px;animation-delay:0s}
+.blob.b2{bottom:-80px;left:-60px;width:300px;animation-delay:-3s}
+.blob.b3{top:40%;right:14%;width:110px;animation-delay:-6s;opacity:.55}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-22px) rotate(4deg)}}
+.hero-inner{position:relative;z-index:2}
+.hero-tag{
+  font-size:.85rem;font-weight:800;letter-spacing:.3em;color:var(--ink-c);
+  margin-bottom:18px;animation:rise .8s .1s both;
+}
+.hero h1{
+  font-weight:900;font-size:clamp(2.4rem,7vw,4.6rem);line-height:1.12;
+  transform:skewX(-5deg);animation:rise .8s .25s both;
+}
+.hero h1 .ink-a{color:var(--ink-a);text-shadow:0 0 38px rgba(232,255,46,.35)}
+.hero h1 .ink-b{color:var(--ink-b);text-shadow:0 0 38px rgba(160,92,255,.4)}
+.hero p.sub{margin-top:22px;color:var(--text-dim);max-width:560px;animation:rise .8s .4s both}
+@keyframes rise{from{opacity:0;transform:translateY(26px) skewX(-5deg)}to{opacity:1;transform:translateY(0) skewX(-5deg)}}
+.hero p.sub{transform:none}
+@keyframes riseP{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.hero p.sub{animation-name:riseP}
+
+.hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:42px}
+.stat{
+  background:rgba(38,32,82,.75);border:1.5px solid var(--card-edge);border-radius:18px;
+  padding:18px 26px;min-width:150px;backdrop-filter:blur(4px);
+  transform:skewX(-4deg);animation:riseP .8s both;
+}
+.stat:nth-child(1){animation-delay:.55s}
+.stat:nth-child(2){animation-delay:.65s}
+.stat:nth-child(3){animation-delay:.75s}
+.stat:nth-child(4){animation-delay:.85s}
+.stat .num{font-size:2rem;font-weight:900;color:var(--ink-a);font-family:var(--mono);line-height:1.1}
+.stat:nth-child(2) .num{color:var(--ink-c)}
+.stat:nth-child(3) .num{color:var(--ink-b)}
+.stat:nth-child(4) .num{color:var(--ink-d)}
+.stat .lbl{font-size:.74rem;color:var(--text-dim);margin-top:4px;letter-spacing:.06em}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--text-dim);font-size:.75rem;letter-spacing:.25em;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ===== インクの帯（セクション区切り）===== */
+.ink-divider{display:block;width:100%;height:64px;margin-bottom:-1px}
+
+/* ===== タイムライン ===== */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.chip{
+  border:2px solid var(--card-edge);background:transparent;color:var(--text-dim);
+  font-weight:800;font-size:.82rem;padding:8px 20px;border-radius:999px;cursor:pointer;
+  transform:skewX(-6deg);transition:all .2s;font-family:inherit;
+}
+.chip:hover{border-color:var(--ink-c);color:var(--ink-c)}
+.chip.active{background:var(--ink-a);border-color:var(--ink-a);color:#171231}
+.chip.active[data-f="major"]{background:var(--ink-c);border-color:var(--ink-c)}
+.chip.active[data-f="balance"]{background:var(--ink-a);border-color:var(--ink-a)}
+.chip.active[data-f="patch"]{background:var(--ink-b);border-color:var(--ink-b);color:#fff}
+
+.timeline{position:relative;padding-left:34px}
+.timeline::before{
+  content:"";position:absolute;left:9px;top:0;bottom:0;width:5px;border-radius:99px;
+  background:linear-gradient(180deg,var(--ink-c),var(--ink-a) 35%,var(--ink-b) 75%,var(--ink-d));
+  opacity:.7;
+}
+.tl-item{
+  position:relative;margin-bottom:18px;
+  opacity:0;transform:translateX(28px);transition:opacity .55s,transform .55s;
+}
+.tl-item.show{opacity:1;transform:translateX(0)}
+.tl-item.hidden{display:none}
+.tl-dot{
+  position:absolute;left:-32px;top:18px;width:17px;height:17px;border-radius:60% 40% 55% 45%;
+  background:var(--ink-a);box-shadow:0 0 0 4px rgba(232,255,46,.18);
+}
+.tl-item[data-type="major"] .tl-dot{background:var(--ink-c);box-shadow:0 0 0 4px rgba(46,230,214,.18);width:22px;height:22px;left:-34px}
+.tl-item[data-type="patch"] .tl-dot{background:var(--ink-b);box-shadow:0 0 0 4px rgba(160,92,255,.18);width:13px;height:13px;left:-30px}
+.tl-card{
+  background:var(--card);border:1.5px solid var(--card-edge);border-radius:16px;
+  padding:16px 22px;transition:transform .2s,border-color .2s;
+}
+.tl-card:hover{transform:translateX(6px);border-color:var(--ink-a)}
+.tl-item[data-type="major"] .tl-card{border-left:5px solid var(--ink-c)}
+.tl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px}
+.tl-ver{font-family:var(--mono);font-weight:900;font-size:1.15rem;color:var(--text)}
+.tl-item[data-type="major"] .tl-ver{color:var(--ink-c);font-size:1.35rem}
+.tl-date{font-size:.78rem;color:var(--text-dim);font-family:var(--mono)}
+.badge{font-size:.68rem;font-weight:800;padding:2px 12px;border-radius:99px;transform:skewX(-6deg);display:inline-block}
+.badge.major{background:rgba(46,230,214,.15);color:var(--ink-c);border:1px solid var(--ink-c)}
+.badge.balance{background:rgba(232,255,46,.12);color:var(--ink-a);border:1px solid var(--ink-a-dim)}
+.badge.patch{background:rgba(160,92,255,.15);color:var(--ink-b);border:1px solid var(--ink-b)}
+.tl-note{font-size:.86rem;color:var(--text-dim);margin-top:6px}
+.tl-gap{font-size:.7rem;color:var(--ink-d);font-family:var(--mono);margin-left:auto}
+
+/* ===== チャート ===== */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.chart-card{
+  background:var(--card);border:1.5px solid var(--card-edge);border-radius:20px;padding:28px;
+  opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s;
+}
+.chart-card.show{opacity:1;transform:translateY(0)}
+.chart-card.full{grid-column:1/-1}
+.chart-card h3{font-size:1.05rem;font-weight:900;margin-bottom:4px;transform:skewX(-4deg)}
+.chart-card .desc{font-size:.8rem;color:var(--text-dim);margin-bottom:18px}
+.chart-box{position:relative;height:280px}
+.chart-card.full .chart-box{height:300px}
+
+/* ===== シーズン ===== */
+.season-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.season-card{
+  border-radius:18px;padding:22px;border:1.5px solid var(--card-edge);background:var(--card);
+  position:relative;overflow:hidden;transition:transform .2s;
+  opacity:0;transform:translateY(24px);
+}
+.season-card.show{opacity:1;transform:translateY(0);transition:opacity .5s,transform .5s}
+.season-card:hover{transform:translateY(-6px) rotate(-1deg)}
+.season-card::after{
+  content:"";position:absolute;right:-28px;bottom:-28px;width:96px;height:96px;
+  border-radius:62% 38% 55% 45%;opacity:.18;background:var(--accent,#2ee6d6);
+}
+.season-card .s-ver{font-family:var(--mono);font-weight:900;color:var(--accent,#2ee6d6);font-size:.85rem}
+.season-card .s-name{font-weight:900;font-size:1.12rem;margin:6px 0 4px;transform:skewX(-4deg)}
+.season-card .s-date{font-size:.74rem;color:var(--text-dim);font-family:var(--mono)}
+.season-card .s-note{font-size:.8rem;color:var(--text-dim);margin-top:10px}
+
+/* ===== 最新アプデ（バフ/ナーフ）===== */
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:8px}
+.vs-col{border-radius:20px;padding:28px;border:2px solid}
+.vs-col.buff{border-color:var(--ink-a);background:linear-gradient(160deg,rgba(232,255,46,.07),transparent 55%)}
+.vs-col.nerf{border-color:var(--ink-b);background:linear-gradient(160deg,rgba(160,92,255,.1),transparent 55%)}
+.vs-col h3{font-size:1.3rem;font-weight:900;transform:skewX(-6deg);margin-bottom:4px}
+.vs-col.buff h3{color:var(--ink-a)}
+.vs-col.nerf h3{color:var(--ink-b)}
+.vs-col .vs-sub{font-size:.78rem;color:var(--text-dim);margin-bottom:18px}
+.vs-item{
+  display:flex;justify-content:space-between;gap:12px;padding:11px 4px;
+  border-bottom:1px dashed var(--card-edge);font-size:.86rem;
+}
+.vs-item:last-child{border-bottom:none}
+.vs-item .w{font-weight:800}
+.vs-item .v{color:var(--text-dim);text-align:right;font-size:.8rem}
+.sp-table{margin-top:42px;background:var(--card);border:1.5px solid var(--card-edge);border-radius:20px;padding:28px}
+.sp-table h3{font-weight:900;transform:skewX(-4deg);margin-bottom:18px}
+.sp-row{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px dashed var(--card-edge);font-size:.88rem;flex-wrap:wrap}
+.sp-row:last-child{border-bottom:none}
+.sp-row .name{flex:1;min-width:180px;font-weight:700}
+.sp-bar{font-family:var(--mono);font-weight:900;display:flex;align-items:center;gap:8px}
+.sp-bar .up{color:var(--ink-a)}
+.sp-bar .down{color:var(--ink-b)}
+.arrow{font-size:1.1rem}
+
+/* ===== 次回予測 ===== */
+.predict{
+  background:linear-gradient(135deg,var(--bg2),var(--card));border:2px solid var(--ink-d);
+  border-radius:24px;padding:46px;text-align:center;position:relative;overflow:hidden;
+}
+.predict .big{font-size:clamp(1.9rem,5vw,3rem);font-weight:900;color:var(--ink-d);font-family:var(--mono);margin:14px 0}
+.predict p{color:var(--text-dim);font-size:.9rem;max-width:560px;margin:0 auto}
+
+footer{padding:46px 0 60px;text-align:center;color:var(--text-dim);font-size:.75rem;border-top:1px solid var(--card-edge);margin-top:40px}
+footer a{color:var(--ink-c)}
+
+@media (max-width:760px){
+  .chart-grid,.vs-grid{grid-template-columns:1fr}
+  section{padding:64px 0}
+  .stat{min-width:120px;padding:14px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .tl-item,.chart-card,.season-card{opacity:1;transform:none}
+}
