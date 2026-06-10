@@ -47,6 +47,16 @@
 .wpn-legend .m{color:var(--ink-c)}
 .wpn-legend .n{color:var(--ink-b)}
 
+/* ===== メインブキ図鑑（mains.html） ===== */
+.wpn-grid.mains{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.wpn-grid.mains .wpn-card{padding:18px 16px 14px}
+.wpn-icon.sm{width:42px;height:42px;margin-bottom:8px}
+.main-kits{
+  font-size:.68rem;color:var(--text-dim);font-family:var(--mono);
+  margin:-4px 0 8px;letter-spacing:.02em;
+}
+.wpn-card.hidden{display:none}
+
 /* ===== 詳細パネル ===== */
 .detail-panel{background:var(--card);border:1.5px solid var(--card-edge);border-radius:24px;padding:34px;margin-top:8px}
 .d-head{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:26px}
