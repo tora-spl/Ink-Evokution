@@ -47,6 +47,16 @@
 .wpn-legend .m{color:var(--ink-c)}
 .wpn-legend .n{color:var(--ink-b)}
 
+/* ===== ブキ実画像（ゲーム内アセット） ===== */
+.wpn-img{
+  width:58px;height:58px;margin-bottom:10px;
+  filter:drop-shadow(0 0 14px color-mix(in srgb,var(--accent) 45%,transparent));
+}
+.wpn-img img{width:100%;height:100%;object-fit:contain}
+.wpn-img.sm{width:48px;height:48px;margin-bottom:8px}
+.d-icon.img{padding:12px}
+.d-icon.img img{width:100%;height:100%;object-fit:contain;filter:none}
+
 /* ===== メインブキ図鑑（mains.html） ===== */
 .wpn-grid.mains{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
 .wpn-grid.mains .wpn-card{padding:18px 16px 14px}

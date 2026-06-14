@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>射程比較表 | スプラトゥーン3 アップデートの軌跡</title>
+<meta name="description" content="『スプラトゥーン3』約60のメインブキを射程の長さで一望できる比較表。チャージャーからフデまで、ゲーム内の射程バーを基準にした参考値でブキ同士の間合いを並べて比べる。">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/weapons.css">
+<link rel="stylesheet" href="css/range.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="index.html"><span class="sq">▪</span> INK EVOKUTION</a>
+  <a class="nav-link" href="index.html">アプデの軌跡</a>
+  <a class="nav-link" href="weapons.html">ブキ種別の軌跡</a>
+  <a class="nav-link" href="mains.html">メインブキ別の軌跡</a>
+  <a class="nav-link current" href="range.html">射程比較表</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero wpn-hero">
+  <svg class="blob b1" viewBox="0 0 200 200"><path fill="#2ee6d6" d="M48 12c30-18 78-12 102 14s28 70 8 98-66 44-100 30S-2 102 6 66 18 30 48 12z" opacity=".14"/></svg>
+  <svg class="blob b2" viewBox="0 0 200 200"><path fill="#e8ff2e" d="M60 8c34-14 84 0 104 32s10 80-18 102-78 22-104-4S-8 70 8 42 26 22 60 8z" opacity=".16"/></svg>
+  <svg class="blob b3" viewBox="0 0 200 200"><path fill="#ff5c8a" d="M52 16c28-20 76-16 100 10s30 68 12 96-62 46-98 34S0 108 6 70 24 36 52 16z" opacity=".45"/></svg>
+  <div class="wrap hero-inner">
+    <div class="hero-tag">SPLATOON 3 — RANGE COMPARISON</div>
+    <h1><span class="ink-a">間合い</span>で、<br><span class="ink-b">ブキ</span>を並べてみる。</h1>
+    <p class="sub">フデの接近戦からリッター4Kの狙撃まで、約60のメインブキをゲーム内の射程バーを基準にした参考値で一直線に。カテゴリで絞り込み、長い順・短い順に並べ替えて、対面の間合いをまるごと見比べる。</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" id="statCount" data-count="0">0</div><div class="lbl">メインブキ</div></div>
+      <div class="stat"><div class="num" id="statMax" style="font-size:1.3rem">—</div><div class="lbl" id="statMaxV">最長射程</div></div>
+      <div class="stat"><div class="num" id="statMin" style="font-size:1.3rem">—</div><div class="lbl" id="statMinV">最短射程</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ SCROLL</div>
+</header>
+
+<!-- ================= 比較表 ================= -->
+<section id="range-sec">
+  <div class="wrap">
+    <span class="eyebrow">Range Chart</span>
+    <h2>メインブキ<span class="hl">射程</span>比較表</h2>
+    <p class="lead">数値はゲーム内の「射程」バー（0〜100）を基準にしたおおよその参考値。チャージャー・ストリンガーはフルチャージ、スピナーは最大チャージ、ワイパーはタメ斬りなど、そのブキの主たる間合いを採用している。色はブキ種を表す。</p>
+
+    <div class="filters" id="catFilters"></div>
+
+    <div class="sort-bar">
+      <span class="sort-label">並び替え</span>
+      <button class="chip active" data-sort="desc">射程が長い順</button>
+      <button class="chip" data-sort="asc">射程が短い順</button>
+    </div>
+
+    <div class="range-legend" id="rangeLegend"></div>
+
+    <div class="range-scale"><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>
+    <div class="range-list" id="rangeList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    本サイトは非公式のファンメイドアーカイブです。射程の数値はゲーム内の射程バーを基準にした参考値であり、公式の正確な数値表記ではありません。<br>
+    アイコン・ブキ画像はスプラトゥーン3のゲーム内アセットに基づきます。<br>
+    Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
+  </div>
+</footer>
+
+<script src="js/assets-data.js"></script>
+<script src="js/weapons-data.js"></script>
+<script src="js/mains-data.js"></script>
+<script src="js/range-data.js"></script>
+<script src="js/range.js"></script>
+</body>
+</html>

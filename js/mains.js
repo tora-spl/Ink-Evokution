@@ -48,7 +48,7 @@ MAIN_WEAPONS.forEach(w=>{
   card.dataset.cat = w.cat;
   card.style.setProperty("--accent", cat.c);
   card.innerHTML = `
-    <div class="wpn-icon sm">${cat.icon}</div>
+    <div class="wpn-img sm"><img src="${weaponImg(w.id)}" alt="${w.name}" loading="lazy" width="256" height="256"></div>
     <div class="wpn-en">${cat.name}</div>
     <div class="wpn-name">${w.name}</div>
     <div class="main-kits">${w.kits.join(" / ")}</div>
@@ -98,7 +98,7 @@ function selectWeapon(id){
   const head = document.getElementById("detailHead");
   head.style.setProperty("--accent", cat.c);
   head.innerHTML = `
-    <div class="d-icon">${cat.icon}</div>
+    <div class="d-icon img"><img src="${weaponImg(w.id)}" alt="${w.name}" width="256" height="256"></div>
     <div>
       <div class="d-en">${cat.en} — ${cat.name}</div>
       <h3 class="d-name">${w.name}の軌跡</h3>
@@ -111,28 +111,43 @@ function selectWeapon(id){
       </div>
     </div>`;
 
-  /* 調整収支チャート（強化+1 / 弱体-1 / 両方±0 の累積） */
+  /* 調整収支チャート（強化+1 / 弱体-1 / 両方±0 の累積）
+     全バージョンを軸に取り、調整のなかった期間はフラットなまま見せる */
+  const allVers = Object.keys(VER_DATES).sort((a,b)=>VER_DATES[a].localeCompare(VER_DATES[b]));
+  const changeMap = {};
+  w.changes.forEach(x=>{ changeMap[x.v] = x; });
   let acc = 0;
-  const points = w.changes.map(x=>{ acc += x.k==="b"?1:x.k==="n"?-1:0; return acc; });
+  const points = allVers.map(v=>{
+    const c = changeMap[v];
+    if(c) acc += c.k==="b"?1:c.k==="n"?-1:0;
+    return acc;
+  });
   if(trendChart) trendChart.destroy();
   trendChart = new Chart(document.getElementById("chartTrend"),{
     type:"line",
     data:{
-      labels:w.changes.map(x=>"v"+x.v),
+      labels:allVers.map(v=>"v"+v),
       datasets:[{
         data:points, borderColor:cat.c, backgroundColor:cat.c+"22",
-        fill:true, tension:.35, pointRadius:6,
-        pointBackgroundColor:w.changes.map(x=>KIND_COLOR[x.k]),
+        fill:true, tension:0, stepped:false,
+        pointRadius:allVers.map(v=>changeMap[v]?6:0),
+        pointHoverRadius:allVers.map(v=>changeMap[v]?7:0),
+        pointBackgroundColor:allVers.map(v=>changeMap[v]?KIND_COLOR[changeMap[v].k]:"transparent"),
         pointBorderColor:"transparent",
       }]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{
-        title:i=>`Ver. ${w.changes[i[0].dataIndex].v}（${fmtDate(VER_DATES[w.changes[i[0].dataIndex].v])}）`,
-        label:i=>`${KIND_LABEL[w.changes[i.dataIndex].k]} ｜ ${w.changes[i.dataIndex].note}`,
+        title:i=>{ const v=allVers[i[0].dataIndex]; return `Ver. ${v}（${fmtDate(VER_DATES[v])}）`; },
+        label:i=>{ const c=changeMap[allVers[i.dataIndex]];
+          return c?`${KIND_LABEL[c.k]} ｜ ${c.note}`:"調整なし"; },
       }}},
-      scales:{y:{title:{display:true,text:"調整収支（強化+1 / 弱体-1）"},ticks:{stepSize:1}}}
+      scales:{
+        x:{type:"category",offset:false,grid:{offset:false},
+           ticks:{autoSkip:false,maxRotation:60,minRotation:60,font:{size:10}}},
+        y:{title:{display:true,text:"調整収支（強化+1 / 弱体-1）"},ticks:{stepSize:1}}
+      }
     }
   });
 

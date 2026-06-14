@@ -1,0 +1,9 @@
+{
+  "name": "ink-evokution",
+  "version": "1.0.0",
+  "description": "スプラトゥーン3 アップデートの軌跡 — 非公式ファンメイドアーカイブ",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -30,7 +30,11 @@ python3 -m http.server 8000
 
 ## データ出典
 
-[任天堂サポート「スプラトゥーン3 更新データ」](https://support.nintendo.com/jp/switch/software_support/av5ja/index.html)
+- 更新履歴: [任天堂サポート「スプラトゥーン3 更新データ」](https://support.nintendo.com/jp/switch/software_support/av5ja/index.html)
+- 画像（ブキ・ステージ・ギアパワー）: スプラトゥーン3 ゲーム内アセット（[Leanny/splat3](https://github.com/Leanny/splat3) ミラー経由で取得）。`assets/img/` 配下に、本サイトのID体系に合わせたファイル名で収録
+  - `assets/img/weapons/` — メインブキ族 63種（`js/mains-data.js` の id と対応）
+  - `assets/img/stages/` — 対戦ステージ 26種（一覧は `js/assets-data.js` の `STAGES`）
+  - `assets/img/gearpowers/` — ギアパワー 26種（一覧は `js/assets-data.js` の `GEAR_POWERS`）
 
 ## 免責
 

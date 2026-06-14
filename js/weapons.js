@@ -92,28 +92,43 @@ function selectClass(id){
       </div>
     </div>`;
 
-  /* 調整収支チャート（強化+1 / 弱体-1 / 両方±0 の累積） */
+  /* 調整収支チャート（強化+1 / 弱体-1 / 両方±0 の累積）
+     全バージョンを軸に取り、調整のなかった期間はフラットなまま見せる */
+  const allVers = Object.keys(VER_DATES).sort((a,b)=>VER_DATES[a].localeCompare(VER_DATES[b]));
+  const changeMap = {};
+  list.forEach(x=>{ changeMap[x.v] = x; });
   let acc = 0;
-  const points = list.map(x=>{ acc += x.k==="b"?1:x.k==="n"?-1:0; return acc; });
+  const points = allVers.map(v=>{
+    const c = changeMap[v];
+    if(c) acc += c.k==="b"?1:c.k==="n"?-1:0;
+    return acc;
+  });
   if(trendChart) trendChart.destroy();
   trendChart = new Chart(document.getElementById("chartTrend"),{
     type:"line",
     data:{
-      labels:list.map(x=>"v"+x.v),
+      labels:allVers.map(v=>"v"+v),
       datasets:[{
         data:points, borderColor:w.c, backgroundColor:w.c+"22",
-        fill:true, tension:.35, stepped:false, pointRadius:5,
-        pointBackgroundColor:list.map(x=>KIND_COLOR[x.k]),
+        fill:true, tension:0, stepped:false,
+        pointRadius:allVers.map(v=>changeMap[v]?5:0),
+        pointHoverRadius:allVers.map(v=>changeMap[v]?7:0),
+        pointBackgroundColor:allVers.map(v=>changeMap[v]?KIND_COLOR[changeMap[v].k]:"transparent"),
         pointBorderColor:"transparent",
       }]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{
-        title:i=>`Ver. ${list[i[0].dataIndex].v}（${fmtDate(VER_DATES[list[i[0].dataIndex].v])}）`,
-        label:i=>`${KIND_LABEL[list[i.dataIndex].k]} ｜ ${list[i.dataIndex].note}`,
+        title:i=>{ const v=allVers[i[0].dataIndex]; return `Ver. ${v}（${fmtDate(VER_DATES[v])}）`; },
+        label:i=>{ const c=changeMap[allVers[i.dataIndex]];
+          return c?`${KIND_LABEL[c.k]} ｜ ${c.note}`:"調整なし"; },
       }}},
-      scales:{y:{title:{display:true,text:"調整収支（強化+1 / 弱体-1）"},ticks:{stepSize:1}}}
+      scales:{
+        x:{type:"category",offset:false,grid:{offset:false},
+           ticks:{autoSkip:false,maxRotation:60,minRotation:60,font:{size:10}}},
+        y:{title:{display:true,text:"調整収支（強化+1 / 弱体-1）"},ticks:{stepSize:1}}
+      }
     }
   });
 
