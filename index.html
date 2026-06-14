@@ -26,8 +26,9 @@
   <svg class="blob b3" viewBox="0 0 200 200"><path fill="#2ee6d6" d="M52 16c28-20 76-16 100 10s30 68 12 96-62 46-98 34S0 108 6 70 24 36 52 16z" opacity=".5"/></svg>
   <div class="wrap hero-inner">
     <div class="hero-tag">SPLATOON 3 — UPDATE ARCHIVE</div>
-    <h1>イカした進化、<br><span class="ink-a">41回</span>の<span class="ink-b">塗り重ね</span>。</h1>
-    <p class="sub">2022年9月の発売から最新Ver.11.2.0まで、『スプラトゥーン3』が歩んだ全アップデートの軌跡を、タイムラインとデータで一望できるアーカイブ。シーズンの記憶も、ブキ調整の歴史も、ぜんぶここに。</p>
+    <h1><span class="ink-a">41回</span>のアップデートを、<br>見やすく<span class="ink-b">塗り重ねる</span>。</h1>
+    <p class="catch">年表で、グラフで、射程比較で。<br>『スプラトゥーン3』の歩みを、<em>いろんな角度から一望</em>できるアーカイブ。</p>
+    <p class="sub">2022年9月の発売から最新Ver.11.2.0まで、配信された全アップデートの軌跡をひとつに。シーズンの記憶も、ブキ調整の歴史も、ぜんぶここに。</p>
     <div class="hero-stats">
       <div class="stat"><div class="num" data-count="41">0</div><div class="lbl">配信された更新データ</div></div>
       <div class="stat"><div class="num" data-count="11">0</div><div class="lbl">メジャーバージョン</div></div>
@@ -47,8 +48,8 @@
     <div class="filters">
       <button class="chip active" data-f="all">すべて (41)</button>
       <button class="chip" data-f="major">シーズン・大型 (10)</button>
-      <button class="chip" data-f="balance">バランス調整 (17)</button>
-      <button class="chip" data-f="patch">不具合修正 (14)</button>
+      <button class="chip" data-f="balance">バランス調整 (14)</button>
+      <button class="chip" data-f="patch">不具合・その他 (17)</button>
     </div>
     <div class="timeline" id="timeline"></div>
   </div>
@@ -73,7 +74,7 @@
       </div>
       <div class="chart-card">
         <h3>更新の種類の内訳</h3>
-        <div class="desc">大型（X.0.0）／バランス調整（X.Y.0）／不具合修正（X.Y.Z）の比率。</div>
+        <div class="desc">シーズン・大型／ブキ調整あり／ブキ調整なし（不具合修正など）の比率。実際の更新内容で分類。</div>
         <div class="chart-box"><canvas id="chartType"></canvas></div>
       </div>
     </div>
@@ -146,6 +147,6 @@
   </div>
 </footer>
 
-<script src="js/app.js"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>

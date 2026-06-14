@@ -7,7 +7,7 @@
 <meta name="description" content="『スプラトゥーン3』のブキ種別アップデート履歴。シューターからワイパーまで、各ブキ種の調整回数・強化と弱体の軌跡をデータで一望。">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/weapons.css">
+<link rel="stylesheet" href="css/weapons.css?v=2">
 </head>
 <body>
 
@@ -59,29 +59,34 @@
   </div>
 </section>
 
-<!-- ================= 詳細 ================= -->
-<section id="detail-sec">
-  <div class="wrap">
-    <span class="eyebrow">Trajectory</span>
-    <h2>選んだブキ種の<span class="hl">軌跡</span></h2>
-    <p class="lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。右肩上がりなら愛され、右肩下がりなら警戒されてきた証。</p>
-    <div class="detail-panel">
-      <div class="d-head" id="detailHead"></div>
-      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
-      <div class="d-timeline" id="detailTimeline"></div>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
-    本サイトは非公式のファンメイドアーカイブです。ブキのイラストはオリジナルのピクトグラムです。<br>
+    本サイトは非公式のファンメイドアーカイブです。ブキ種アイコンはスプラトゥーン3のゲーム内ブキ画像をもとにしたシルエットです。<br>
     データ出典：<a href="https://support.nintendo.com/jp/switch/software_support/av5ja/index.html" target="_blank" rel="noopener">任天堂サポート「スプラトゥーン3 更新データ」</a>（調整内容は要約・編集を含む）<br>
     Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
   </div>
 </footer>
 
-<script src="js/weapons-data.js"></script>
-<script src="js/weapons.js?v=2"></script>
+<!-- ================= 軌跡モーダル ================= -->
+<div class="trj-modal" id="detailModal" hidden>
+  <div class="trj-backdrop" data-close></div>
+  <div class="trj-card" role="dialog" aria-modal="true" aria-labelledby="detailHead">
+    <div class="trj-toolbar">
+      <button class="trj-btn nav" id="modalPrev" type="button" aria-label="前のブキ種">◀ 前</button>
+      <span class="trj-count" id="modalCount"></span>
+      <button class="trj-btn nav" id="modalNext" type="button" aria-label="次のブキ種">次 ▶</button>
+      <button class="trj-btn close" id="modalClose" type="button" aria-label="閉じる">✕</button>
+    </div>
+    <div class="trj-body">
+      <div class="d-head" id="detailHead"></div>
+      <p class="trj-lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。右肩上がりなら愛され、右肩下がりなら警戒されてきた証。</p>
+      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
+      <div class="d-timeline" id="detailTimeline"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/weapons-data.js?v=4"></script>
+<script src="js/weapons.js?v=7"></script>
 </body>
 </html>

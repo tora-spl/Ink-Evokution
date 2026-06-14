@@ -61,7 +61,12 @@ h2 .hl{color:var(--ink-a)}
 }
 .hero h1 .ink-a{color:var(--ink-a);text-shadow:0 0 38px rgba(232,255,46,.35)}
 .hero h1 .ink-b{color:var(--ink-b);text-shadow:0 0 38px rgba(160,92,255,.4)}
-.hero p.sub{margin-top:22px;color:var(--text-dim);max-width:560px;animation:rise .8s .4s both}
+.hero p.catch{
+  margin-top:20px;font-size:clamp(1.05rem,2.3vw,1.5rem);font-weight:800;line-height:1.5;
+  color:var(--text);max-width:600px;animation:riseP .8s .4s both;
+}
+.hero p.catch em{font-style:normal;color:var(--ink-c);text-shadow:0 0 26px rgba(46,230,214,.3)}
+.hero p.sub{margin-top:16px;color:var(--text-dim);max-width:560px;animation:rise .8s .55s both}
 @keyframes rise{from{opacity:0;transform:translateY(26px) skewX(-5deg)}to{opacity:1;transform:translateY(0) skewX(-5deg)}}
 .hero p.sub{transform:none}
 @keyframes riseP{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}

@@ -33,13 +33,13 @@ WEAPON_CLASSES.forEach(w=>{
   card.innerHTML = `
     <div class="wpn-icon">${w.icon}</div>
     <div class="wpn-en">${w.en}</div>
-    <div class="wpn-name">${w.name}</div>
+    <div class="wpn-name">${w.name}系統</div>
     <div class="wpn-count"><span class="num">${s.total}</span>回の調整</div>
     <div class="wpn-bar" role="img" aria-label="強化${s.b}回・両方${s.m}回・弱体化${s.n}回">
       <span class="seg b" style="flex:${s.b}"></span><span class="seg m" style="flex:${s.m}"></span><span class="seg n" style="flex:${s.n}"></span>
     </div>
     <div class="wpn-legend"><span class="b">↑${s.b}</span><span class="m">↕${s.m}</span><span class="n">↓${s.n}</span></div>`;
-  card.addEventListener("click",()=>{ selectClass(w.id); document.getElementById("detail-sec").scrollIntoView({behavior:"smooth"}); });
+  card.addEventListener("click",()=>openModal(w.id, card));
   gridEl.appendChild(card);
 });
 
@@ -67,14 +67,18 @@ new Chart(document.getElementById("chartRanking"),{
   }
 });
 
-/* ============ 詳細パネル ============ */
+/* ============ 詳細（モーダル） ============ */
 let trendChart = null;
+let currentId = null;
 function selectClass(id){
   const w = WEAPON_CLASSES.find(x=>x.id===id);
   const list = WEAPON_CHANGES[id];
   const s = stats(id);
+  currentId = id;
 
   document.querySelectorAll(".wpn-card").forEach(c=>c.classList.toggle("selected", c.dataset.id===id));
+  const idx = WEAPON_CLASSES.findIndex(x=>x.id===id);
+  document.getElementById("modalCount").textContent = `${idx+1} / ${WEAPON_CLASSES.length}`;
 
   const head = document.getElementById("detailHead");
   head.style.setProperty("--accent", w.c);
@@ -82,7 +86,7 @@ function selectClass(id){
     <div class="d-icon">${w.icon}</div>
     <div>
       <div class="d-en">${w.en}</div>
-      <h3 class="d-name">${w.name}の軌跡</h3>
+      <h3 class="d-name">${w.name}系統の軌跡</h3>
       <p class="d-desc">${w.desc}</p>
       <div class="d-tags">
         <span class="badge balance">調整 ${s.total}回</span>
@@ -146,7 +150,46 @@ function selectClass(id){
     tl.appendChild(row);
   });
 }
-selectClass("shooter");
+/* ============ モーダル制御 ============ */
+const modal = document.getElementById("detailModal");
+const modalBody = modal.querySelector(".trj-body");
+const modalClose = document.getElementById("modalClose");
+let lastCardEl = null;
+
+function openModal(id, cardEl){
+  lastCardEl = cardEl || document.querySelector(`.wpn-card[data-id="${id}"]`);
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  selectClass(id);                 // モーダル表示後に生成するのでチャートが正しいサイズで描画される
+  requestAnimationFrame(()=>modal.classList.add("open"));
+  modalClose.focus();
+}
+function closeModal(){
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+  modalBody.scrollTop = 0;          // 次に開くとき先頭から表示されるようにリセット
+  let done = false;
+  const fin = ()=>{ if(done) return; done = true; modal.hidden = true; };
+  modal.querySelector(".trj-card").addEventListener("transitionend", fin, {once:true});
+  setTimeout(fin, 300);
+  if(lastCardEl) lastCardEl.focus();
+}
+function step(dir){
+  const ids = WEAPON_CLASSES.map(w=>w.id);
+  const i = (ids.indexOf(currentId) + dir + ids.length) % ids.length;
+  selectClass(ids[i]);
+  modalBody.scrollTop = 0;
+}
+modalClose.addEventListener("click", closeModal);
+document.getElementById("modalPrev").addEventListener("click", ()=>step(-1));
+document.getElementById("modalNext").addEventListener("click", ()=>step(1));
+modal.querySelector(".trj-backdrop").addEventListener("click", closeModal);
+document.addEventListener("keydown", e=>{
+  if(modal.hidden) return;
+  if(e.key === "Escape") closeModal();
+  else if(e.key === "ArrowLeft") step(-1);
+  else if(e.key === "ArrowRight") step(1);
+});
 
 /* ============ スクロール出現 & カウントアップ ============ */
 const io = new IntersectionObserver(es=>{
