@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>射程比較表 | スプラトゥーン3 アップデートの軌跡</title>
-<meta name="description" content="『スプラトゥーン3』約60のメインブキを射程の長さで一望できる比較表。チャージャーからフデまで、ゲーム内の射程バーを基準にした参考値でブキ同士の間合いを並べて比べる。">
+<meta name="description" content="『スプラトゥーン3』約60のメインブキを射程の長さで一望できる比較表。チャージャーからフデまで、有効射程（実用・確定距離）を試し撃ちのラインで計測し、リッター4K=100に正規化した値でブキ同士の間合いを並べて比べる。">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/weapons.css">
 <link rel="stylesheet" href="css/range.css">
@@ -27,7 +27,7 @@
   <div class="wrap hero-inner">
     <div class="hero-tag">SPLATOON 3 — RANGE COMPARISON</div>
     <h1><span class="ink-a">間合い</span>で、<br><span class="ink-b">ブキ</span>を並べてみる。</h1>
-    <p class="sub">フデの接近戦からリッター4Kの狙撃まで、約60のメインブキをゲーム内の射程バーを基準にした参考値で一直線に。カテゴリで絞り込み、長い順・短い順に並べ替えて、対面の間合いをまるごと見比べる。</p>
+    <p class="sub">フデの接近戦からリッター4Kの狙撃まで、約60のメインブキを有効射程（実用・確定距離）でまっすぐに。リッター4Kを100とした正規化値で、カテゴリで絞り込み、長い順・短い順に並べ替えて、対面の間合いをまるごと見比べる。</p>
     <div class="hero-stats">
       <div class="stat"><div class="num" id="statCount" data-count="0">0</div><div class="lbl">メインブキ</div></div>
       <div class="stat"><div class="num" id="statMax" style="font-size:1.3rem">—</div><div class="lbl" id="statMaxV">最長射程</div></div>
@@ -42,7 +42,7 @@
   <div class="wrap">
     <span class="eyebrow">Range Chart</span>
     <h2>メインブキ<span class="hl">射程</span>比較表</h2>
-    <p class="lead">数値はゲーム内の「射程」バー（0〜100）を基準にしたおおよその参考値。チャージャー・ストリンガーはフルチャージ、スピナーは最大チャージ、ワイパーはタメ斬りなど、そのブキの主たる間合いを採用している。色はブキ種を表す。</p>
+    <p class="lead">数値は<strong>有効射程（実用・確定距離）</strong>の近似値。各記事が試し撃ち場の「ライン」で計測した射程を突き合わせ、リッター4K（フルチャージ＝約6.2ライン）を100として正規化している。チャージャー・ストリンガーはフルチャージ、スピナーは最大チャージ、ワイパーはタメ斬り、ローラーは縦振りなど、そのブキの主たる間合いを採用。色はブキ種を表す。</p>
 
     <div class="filters" id="catFilters"></div>
 
@@ -61,16 +61,16 @@
 
 <footer>
   <div class="wrap">
-    本サイトは非公式のファンメイドアーカイブです。射程の数値はゲーム内の射程バーを基準にした参考値であり、公式の正確な数値表記ではありません。<br>
+    本サイトは非公式のファンメイドアーカイブです。射程の数値は各攻略記事の有効射程（ライン計測）を突き合わせ、リッター4K=100に正規化した近似値であり、公式の正確な数値表記ではありません。<br>
     アイコン・ブキ画像はスプラトゥーン3のゲーム内アセットに基づきます。<br>
     Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
   </div>
 </footer>
 
 <script src="js/assets-data.js"></script>
-<script src="js/weapons-data.js"></script>
-<script src="js/mains-data.js"></script>
-<script src="js/range-data.js"></script>
+<script src="js/weapons-data.js?v=3"></script>
+<script src="js/mains-data.js?v=3"></script>
+<script src="js/range-data.js?v=2"></script>
 <script src="js/range.js"></script>
 </body>
 </html>
