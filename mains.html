@@ -7,7 +7,7 @@
 <meta name="description" content="『スプラトゥーン3』のメインブキ別アップデート履歴。スプラシューターからデンタルワイパーまで、メイン性能で括った各ブキの調整回数と強化/弱体の軌跡。">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/weapons.css">
+<link rel="stylesheet" href="css/weapons.css?v=3">
 </head>
 <body>
 
@@ -43,7 +43,7 @@
   <div class="wrap">
     <span class="eyebrow">Main Weapons</span>
     <h2>メインブキ<span class="hl">図鑑</span> — 調整回数つき</h2>
-    <p class="lead">同じメイン性能のブキ（コラボ・ネオ・ヒューなど）は1枚のカードに括っている。カテゴリで絞り込み、カードを選ぶと下に詳細な軌跡が表示される。</p>
+    <p class="lead">同じメイン性能のブキ（コラボ・ネオ・ヒューなど）は1枚のカードに括っている。カテゴリで絞り込み、カードを選ぶと詳細な軌跡がポップアップで表示される。</p>
     <div class="filters" id="catFilters"></div>
     <div class="wpn-grid mains" id="mainGrid"></div>
   </div>
@@ -61,20 +61,6 @@
   </div>
 </section>
 
-<!-- ================= 詳細 ================= -->
-<section id="detail-sec">
-  <div class="wrap">
-    <span class="eyebrow">Trajectory</span>
-    <h2>選んだブキの<span class="hl">軌跡</span></h2>
-    <p class="lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。右肩上がりなら愛され、右肩下がりなら警戒されてきた証。</p>
-    <div class="detail-panel">
-      <div class="d-head" id="detailHead"></div>
-      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
-      <div class="d-timeline" id="detailTimeline"></div>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     本サイトは非公式のファンメイドアーカイブです。アイコンはブキ種を表すオリジナルのピクトグラムです。<br>
@@ -83,9 +69,28 @@
   </div>
 </footer>
 
+<!-- ================= 軌跡モーダル ================= -->
+<div class="trj-modal" id="detailModal" hidden>
+  <div class="trj-backdrop" data-close></div>
+  <div class="trj-card" role="dialog" aria-modal="true" aria-labelledby="detailHead">
+    <div class="trj-toolbar">
+      <button class="trj-btn nav" id="modalPrev" type="button" aria-label="前のブキ">◀ 前</button>
+      <span class="trj-count" id="modalCount"></span>
+      <button class="trj-btn nav" id="modalNext" type="button" aria-label="次のブキ">次 ▶</button>
+      <button class="trj-btn close" id="modalClose" type="button" aria-label="閉じる">✕</button>
+    </div>
+    <div class="trj-body">
+      <div class="d-head" id="detailHead"></div>
+      <p class="trj-lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。右肩上がりなら愛され、右肩下がりなら警戒されてきた証。</p>
+      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
+      <div class="d-timeline" id="detailTimeline"></div>
+    </div>
+  </div>
+</div>
+
 <script src="js/assets-data.js"></script>
 <script src="js/weapons-data.js?v=5"></script>
 <script src="js/mains-data.js?v=5"></script>
-<script src="js/mains.js?v=3"></script>
+<script src="js/mains.js?v=4"></script>
 </body>
 </html>

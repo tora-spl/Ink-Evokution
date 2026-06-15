@@ -57,7 +57,7 @@ MAIN_WEAPONS.forEach(w=>{
       <span class="seg b" style="flex:${s.b}"></span><span class="seg m" style="flex:${s.m}"></span><span class="seg n" style="flex:${s.n}"></span>
     </div>
     <div class="wpn-legend"><span class="b">↑${s.b}</span><span class="m">↕${s.m}</span><span class="n">↓${s.n}</span></div>`;
-  card.addEventListener("click",()=>{ selectWeapon(w.id); document.getElementById("detail-sec").scrollIntoView({behavior:"smooth"}); });
+  card.addEventListener("click",()=>openModal(w.id, card));
   gridEl.appendChild(card);
 });
 
@@ -88,12 +88,17 @@ new Chart(document.getElementById("chartRanking"),{
 
 /* ============ 詳細パネル ============ */
 let trendChart = null;
+let currentId = null;
 function selectWeapon(id){
   const w = MAIN_WEAPONS.find(x=>x.id===id);
   const cat = catOf(w.cat);
   const s = stats(w);
+  currentId = id;
 
   document.querySelectorAll(".main-card").forEach(c=>c.classList.toggle("selected", c.dataset.id===id));
+  const vis = visibleIds();
+  const pos = vis.indexOf(id);
+  document.getElementById("modalCount").textContent = pos>=0 ? `${pos+1} / ${vis.length}` : "";
 
   const head = document.getElementById("detailHead");
   head.style.setProperty("--accent", cat.c);
@@ -165,7 +170,51 @@ function selectWeapon(id){
     tl.appendChild(row);
   });
 }
-selectWeapon("sshooter");
+/* ============ モーダル制御 ============ */
+const modal = document.getElementById("detailModal");
+const modalBody = modal.querySelector(".trj-body");
+const modalClose = document.getElementById("modalClose");
+let lastCardEl = null;
+
+/* 絞り込み・検索で表示中のカードだけを前後ナビの対象にする */
+const visibleIds = () => [...document.querySelectorAll(".main-card:not(.hidden)")].map(c=>c.dataset.id);
+
+function openModal(id, cardEl){
+  lastCardEl = cardEl || document.querySelector(`.main-card[data-id="${id}"]`);
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  selectWeapon(id);                // モーダル表示後に生成するのでチャートが正しいサイズで描画される
+  requestAnimationFrame(()=>modal.classList.add("open"));
+  modalClose.focus();
+}
+function closeModal(){
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+  modalBody.scrollTop = 0;          // 次に開くとき先頭から表示されるようにリセット
+  let done = false;
+  const fin = ()=>{ if(done) return; done = true; modal.hidden = true; };
+  modal.querySelector(".trj-card").addEventListener("transitionend", fin, {once:true});
+  setTimeout(fin, 300);
+  if(lastCardEl) lastCardEl.focus();
+}
+function step(dir){
+  const ids = visibleIds();
+  if(!ids.length) return;
+  const at = ids.indexOf(currentId);
+  const i = at===-1 ? 0 : (at + dir + ids.length) % ids.length;
+  selectWeapon(ids[i]);
+  modalBody.scrollTop = 0;
+}
+modalClose.addEventListener("click", closeModal);
+document.getElementById("modalPrev").addEventListener("click", ()=>step(-1));
+document.getElementById("modalNext").addEventListener("click", ()=>step(1));
+modal.querySelector(".trj-backdrop").addEventListener("click", closeModal);
+document.addEventListener("keydown", e=>{
+  if(modal.hidden) return;
+  if(e.key === "Escape") closeModal();
+  else if(e.key === "ArrowLeft") step(-1);
+  else if(e.key === "ArrowRight") step(1);
+});
 
 /* ============ スクロール出現 & カウントアップ ============ */
 const io = new IntersectionObserver(es=>{

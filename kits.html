@@ -7,7 +7,7 @@
 <meta name="description" content="『スプラトゥーン3』を1本ずつ。シャープマーカー・ネオ・GECKのように、サブ・スペシャル・スペシャル必要ポイントが異なる個別ブキごとに、メイン／サブ／スペシャル／必要ポイントの強化・弱体をすべて統合した調整の軌跡。">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/weapons.css">
+<link rel="stylesheet" href="css/weapons.css?v=3">
 <link rel="stylesheet" href="css/kits.css?v=1">
 </head>
 <body>
@@ -44,7 +44,7 @@
   <div class="wrap">
     <span class="eyebrow">Weapons</span>
     <h2>個別ブキ<span class="hl">図鑑</span> — 調整回数つき</h2>
-    <p class="lead">1本ごとに、サブ・スペシャル・必要ポイントまで含めた調整回数を表示。カテゴリで絞り込むか、名前で検索。カードを選ぶと下に詳細な軌跡が出る。</p>
+    <p class="lead">1本ごとに、サブ・スペシャル・必要ポイントまで含めた調整回数を表示。カテゴリで絞り込むか、名前で検索。カードを選ぶと詳細な軌跡がポップアップで表示される。</p>
     <input type="search" id="kitSearch" class="kit-search" placeholder="ブキ名で検索（例：シャープマーカーネオ）" aria-label="ブキ名で検索">
     <div class="filters" id="catFilters"></div>
     <div class="src-legend" id="srcLegend"></div>
@@ -64,20 +64,6 @@
   </div>
 </section>
 
-<!-- ================= 詳細 ================= -->
-<section id="detail-sec">
-  <div class="wrap">
-    <span class="eyebrow">Trajectory</span>
-    <h2>選んだ1本の<span class="hl">軌跡</span></h2>
-    <p class="lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。各調整には出典（メイン／サブ／スペシャル／SP）のタグが付く。</p>
-    <div class="detail-panel">
-      <div class="d-head" id="detailHead"></div>
-      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
-      <div class="d-timeline" id="detailTimeline"></div>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     本サイトは非公式のファンメイドアーカイブです。各ブキのサブ・スペシャル・必要ポイント・登場時期は <a href="https://github.com/Leanny/splat3" target="_blank" rel="noopener">Leanny/splat3</a>（ゲーム内データ）に基づきます。<br>
@@ -86,9 +72,28 @@
   </div>
 </footer>
 
+<!-- ================= 軌跡モーダル ================= -->
+<div class="trj-modal" id="detailModal" hidden>
+  <div class="trj-backdrop" data-close></div>
+  <div class="trj-card" role="dialog" aria-modal="true" aria-labelledby="detailHead">
+    <div class="trj-toolbar">
+      <button class="trj-btn nav" id="modalPrev" type="button" aria-label="前のブキ">◀ 前</button>
+      <span class="trj-count" id="modalCount"></span>
+      <button class="trj-btn nav" id="modalNext" type="button" aria-label="次のブキ">次 ▶</button>
+      <button class="trj-btn close" id="modalClose" type="button" aria-label="閉じる">✕</button>
+    </div>
+    <div class="trj-body">
+      <div class="d-head" id="detailHead"></div>
+      <p class="trj-lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。各調整には出典（メイン／サブ／スペシャル／SP）のタグが付く。</p>
+      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
+      <div class="d-timeline" id="detailTimeline"></div>
+    </div>
+  </div>
+</div>
+
 <script src="js/assets-data.js"></script>
 <script src="js/weapons-data.js?v=5"></script>
 <script src="js/kits-data.js?v=1"></script>
-<script src="js/kits.js?v=2"></script>
+<script src="js/kits.js?v=3"></script>
 </body>
 </html>
