@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個別ブキの軌跡 | スプラトゥーン3 アップデートの軌跡</title>
+<meta name="description" content="『スプラトゥーン3』を1本ずつ。シャープマーカー・ネオ・GECKのように、サブ・スペシャル・スペシャル必要ポイントが異なる個別ブキごとに、メイン／サブ／スペシャル／必要ポイントの強化・弱体をすべて統合した調整の軌跡。">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha384-bs/nf9FbdNouRbMiFcrcZfLXYPKiPaGVGplVbv7dLGECccEXDW+S3zjqSKR5ZEaD" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/weapons.css">
+<link rel="stylesheet" href="css/kits.css?v=1">
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="index.html"><span class="sq">▪</span> INK EVOKUTION</a>
+  <a class="nav-link" href="index.html">アプデの軌跡</a>
+  <a class="nav-link" href="weapons.html">ブキ種別の軌跡</a>
+  <a class="nav-link" href="mains.html">メインブキ別の軌跡</a>
+  <a class="nav-link current" href="kits.html">個別ブキの軌跡</a>
+  <a class="nav-link" href="range.html">射程比較表</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero wpn-hero">
+  <svg class="blob b1" viewBox="0 0 200 200"><path fill="#2ee6d6" d="M48 12c30-18 78-12 102 14s28 70 8 98-66 44-100 30S-2 102 6 66 18 30 48 12z" opacity=".14"/></svg>
+  <svg class="blob b2" viewBox="0 0 200 200"><path fill="#a05cff" d="M60 8c34-14 84 0 104 32s10 80-18 102-78 22-104-4S-8 70 8 42 26 22 60 8z" opacity=".16"/></svg>
+  <svg class="blob b3" viewBox="0 0 200 200"><path fill="#e8ff2e" d="M52 16c28-20 76-16 100 10s30 68 12 96-62 46-98 34S0 108 6 70 24 36 52 16z" opacity=".45"/></svg>
+  <div class="wrap hero-inner">
+    <div class="hero-tag">SPLATOON 3 — WEAPON-BY-WEAPON ARCHIVE</div>
+    <h1>ブキ<span class="ink-a">1本</span>ずつ、<br><span class="ink-b">すべての調整</span>を。</h1>
+    <p class="sub">シャープマーカーとネオとGECKは、サブもスペシャルも必要ポイントも違う。だから1本ごとに分けて、メイン性能・サブ・スペシャル・スペシャル必要ポイントの強化と弱体を、まるごと束ねた軌跡。約160本の個別ブキ図鑑。</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" id="statTotal" data-count="0">0</div><div class="lbl">のべ調整回数</div></div>
+      <div class="stat"><div class="num" id="statWeapons" data-count="0">0</div><div class="lbl">個別ブキ</div></div>
+      <div class="stat"><div class="num" id="statTop" style="font-size:1.15rem">—</div><div class="lbl" id="statTopCount">最多調整</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ SCROLL</div>
+</header>
+
+<!-- ================= ブキカード ================= -->
+<section id="grid-sec">
+  <div class="wrap">
+    <span class="eyebrow">Weapons</span>
+    <h2>個別ブキ<span class="hl">図鑑</span> — 調整回数つき</h2>
+    <p class="lead">1本ごとに、サブ・スペシャル・必要ポイントまで含めた調整回数を表示。カテゴリで絞り込むか、名前で検索。カードを選ぶと下に詳細な軌跡が出る。</p>
+    <input type="search" id="kitSearch" class="kit-search" placeholder="ブキ名で検索（例：シャープマーカーネオ）" aria-label="ブキ名で検索">
+    <div class="filters" id="catFilters"></div>
+    <div class="src-legend" id="srcLegend"></div>
+    <div class="wpn-grid mains" id="kitGrid"></div>
+  </div>
+</section>
+
+<!-- ================= ランキング ================= -->
+<section id="ranking-sec" style="background:var(--bg2)">
+  <div class="wrap">
+    <span class="eyebrow">Ranking</span>
+    <h2>調整回数<span class="hl">TOP15</span></h2>
+    <p class="lead">メイン・サブ・スペシャル・必要ポイントのすべてを合算した、最も手が入った1本はどれか。</p>
+    <div class="chart-card full show">
+      <div class="chart-box" style="height:480px"><canvas id="chartRanking"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 詳細 ================= -->
+<section id="detail-sec">
+  <div class="wrap">
+    <span class="eyebrow">Trajectory</span>
+    <h2>選んだ1本の<span class="hl">軌跡</span></h2>
+    <p class="lead">調整収支は強化を+1、弱体化を-1、両方を±0として累積した参考値。各調整には出典（メイン／サブ／スペシャル／SP）のタグが付く。</p>
+    <div class="detail-panel">
+      <div class="d-head" id="detailHead"></div>
+      <div class="trend-box"><canvas id="chartTrend"></canvas></div>
+      <div class="d-timeline" id="detailTimeline"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    本サイトは非公式のファンメイドアーカイブです。各ブキのサブ・スペシャル・必要ポイント・登場時期は <a href="https://github.com/Leanny/splat3" target="_blank" rel="noopener">Leanny/splat3</a>（ゲーム内データ）に基づきます。<br>
+    強化・弱体の内容は <a href="https://support.nintendo.com/jp/switch/software_support/av5ja/index.html" target="_blank" rel="noopener">任天堂サポート「スプラトゥーン3 更新データ」</a> を出典とし（要約・編集を含む）、必要ポイントの増減はゲーム内データの差分と公式記述の双方で照合しています。サーモンラン専用の調整は含みません。<br>
+    Splatoon™はNintendoの商標です。当サイトは任天堂とは関係ありません。
+  </div>
+</footer>
+
+<script src="js/assets-data.js"></script>
+<script src="js/weapons-data.js?v=5"></script>
+<script src="js/kits-data.js?v=1"></script>
+<script src="js/kits.js?v=1"></script>
+</body>
+</html>

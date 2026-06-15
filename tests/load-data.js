@@ -12,12 +12,14 @@ const FILES = [
   "js/weapons-data.js",
   "js/mains-data.js",
   "js/range-data.js",
+  "js/kits-data.js",
 ];
 const EXPORTS = [
   "ASSET_PATHS", "weaponImg",
   "VER_DATES", "WEAPON_CLASSES", "WEAPON_CHANGES",
   "MAIN_WEAPONS",
   "WEAPON_RANGE", "RANGE_KIND", "rangeKindOf",
+  "KIT_VER_DATES", "KITS",
 ];
 
 function loadData() {

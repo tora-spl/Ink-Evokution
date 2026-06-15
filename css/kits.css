@@ -1,0 +1,40 @@
+/* ============ 個別ブキの軌跡 ページ固有スタイル ============ */
+
+/* 出典タグ（メイン/サブ/スペシャル/SP） */
+.src-chip{
+  display:inline-block;font-size:.62rem;font-weight:800;line-height:1.6;
+  padding:0 8px;border-radius:999px;margin-right:7px;vertical-align:middle;letter-spacing:.04em;white-space:nowrap;
+}
+.src-chip.main{background:rgba(232,255,46,.14);color:#e8ff2e;border:1px solid rgba(232,255,46,.45)}
+.src-chip.sub {background:rgba(58,209,255,.14);color:#3ad1ff;border:1px solid rgba(58,209,255,.45)}
+.src-chip.spe {background:rgba(255,122,176,.14);color:#ff7ab0;border:1px solid rgba(255,122,176,.45)}
+.src-chip.sp  {background:rgba(185,140,255,.16);color:#b98cff;border:1px solid rgba(185,140,255,.5)}
+
+/* 詳細年表の中で出典ごとに1行ずつ */
+.d-srcline{display:block;margin:3px 0;line-height:1.5}
+.d-srcline:first-child{margin-top:0}
+
+/* 出典の凡例 */
+.src-legend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+
+/* ブキカードの構成表示 */
+.kit-loadout{font-size:.66rem;color:var(--text-dim);line-height:1.45;margin:3px 0 1px;min-height:1.9em}
+.kit-loadout b{color:var(--text);font-weight:700}
+.kit-sp{font-size:.66rem;color:var(--text-dim);margin-bottom:4px}
+.kit-sp b{color:var(--text);font-weight:800}
+
+/* 詳細ヘッダの構成タグ */
+.kit-meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.kit-meta .pill{font-size:.72rem;padding:3px 10px;border-radius:999px;background:var(--bg2);border:1px solid var(--card-edge);color:var(--text-dim)}
+.kit-meta .pill b{color:var(--text);font-weight:800}
+
+/* 検索ボックス */
+.kit-search{
+  width:100%;max-width:360px;margin:4px 0 12px;padding:9px 14px;
+  background:var(--bg2);border:1.5px solid var(--card-edge);border-radius:999px;
+  color:var(--text);font-size:.85rem;font-family:inherit;
+}
+.kit-search::placeholder{color:var(--text-dim)}
+.kit-search:focus{outline:none;border-color:var(--ink-c)}
+
+.main-card.hidden{display:none}
