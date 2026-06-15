@@ -6,6 +6,7 @@ const SRC_JP2CLASS = {"メイン":"main", "サブ":"sub", "スペシャル":"spe
 const fmtDate = s => s.replace(/-/g,".");
 const cssVar = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const catOf = id => WEAPON_CLASSES.find(c=>c.id===id);
+const kitImg = id => `assets/img/kits/${id}.png`;
 
 const stats = w => {
   const c = {b:0,n:0,m:0};
@@ -76,7 +77,7 @@ KITS.forEach(w=>{
   card.dataset.name = w.name;
   card.style.setProperty("--accent", cat.c);
   card.innerHTML = `
-    <div class="wpn-img sm"><img src="${weaponImg(w.mainId)}" alt="${w.name}" loading="lazy" width="256" height="256"></div>
+    <div class="wpn-img sm"><img src="${kitImg(w.id)}" alt="${w.name}" loading="lazy" width="256" height="256" onerror="this.onerror=null;this.src='${weaponImg(w.mainId)}'"></div>
     <div class="wpn-en">${cat.name}</div>
     <div class="wpn-name">${w.name}</div>
     <div class="kit-loadout">サブ <b>${w.sub}</b><br>スペシャル <b>${w.spe}</b></div>
@@ -127,7 +128,7 @@ function selectKit(id){
   const head = document.getElementById("detailHead");
   head.style.setProperty("--accent", cat.c);
   head.innerHTML = `
-    <div class="d-icon img"><img src="${weaponImg(w.mainId)}" alt="${w.name}" width="256" height="256"></div>
+    <div class="d-icon img"><img src="${kitImg(w.id)}" alt="${w.name}" width="256" height="256" onerror="this.onerror=null;this.src='${weaponImg(w.mainId)}'"></div>
     <div>
       <div class="d-en">${cat.en} — ${cat.name}</div>
       <h3 class="d-name">${w.name}の軌跡</h3>
